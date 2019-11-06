@@ -61,6 +61,56 @@ public class QuaideDoublyLinkedList<T> {
         return returnValue;
     }
 
+    public T pollFirst() {
+        if (size == 0) {
+            throw new NoSuchElementException();
+        }
+        T returnValue;
+        if (size == 1) {
+            returnValue = head.getValue();
+            head = null;
+        } else {
+            returnValue = head.getValue();
+            head = head.getNextInLine();
+        }
+        size = size - 1;
+        return returnValue;
+    }
+
+    public boolean remove(T element) {
+        if (size == 1 && head.getValue().equals(element)) {
+            head = null;
+            size = size - 1;
+            return true;
+        } else if (size > 1) {
+            for (QuaideNode<T> current = head; current != tail; current = current.getNextInLine()) {
+                if (current.getValue().equals(element)) {
+                    removeFromList(current);
+                    return true;
+                }
+            }
+            if (tail.getValue().equals(element)) {
+                removeTail();
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private void removeTail() {
+        tail = tail.getInFrontOfMe();
+        tail.setNextInLine(null);
+        size = size - 1;
+    }
+
+    private void removeFromList(QuaideNode<T> current) {
+        QuaideNode<T> inFrontOfMe = current.getInFrontOfMe();
+        QuaideNode<T> nextInLine = current.getNextInLine();
+        inFrontOfMe.setNextInLine(nextInLine);
+        nextInLine.setInFrontOfMe(inFrontOfMe);
+        size = size - 1;
+    }
+
     public T peek() {
         return head.getValue();
     }

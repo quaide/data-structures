@@ -5,8 +5,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.NoSuchElementException;
 
-//still need: prepend(), pollFirst(), pollLast(), remove()
-
 public class QuaideDoublyLinkedListTest {
 
     @Test
@@ -32,7 +30,7 @@ public class QuaideDoublyLinkedListTest {
         doublyLinkedList.prepend("Mitch");
         Assertions.assertEquals("Mitch", doublyLinkedList.peek());
 
-        for(int i = 0; i < 20; i++) {
+        for (int i = 0; i < 20; i++) {
             doublyLinkedList.prepend(String.valueOf(i));
             Assertions.assertEquals(String.valueOf(i), doublyLinkedList.peek());
         }
@@ -51,6 +49,28 @@ public class QuaideDoublyLinkedListTest {
     }
 
     @Test
+    public void removeElement() {
+        QuaideDoublyLinkedList<String> doublyLinkedList = new QuaideDoublyLinkedList<>();
+        Assertions.assertEquals(false, doublyLinkedList.remove("a"));
+
+        doublyLinkedList.append("a");
+        doublyLinkedList.remove("a");
+        Assertions.assertEquals(0, doublyLinkedList.size());
+
+        doublyLinkedList.append("a");
+        doublyLinkedList.append("b");
+        doublyLinkedList.append("c");
+        doublyLinkedList.append("d");
+        doublyLinkedList.append("e");
+        doublyLinkedList.remove("b");
+        doublyLinkedList.remove("d");
+        Assertions.assertEquals(3, doublyLinkedList.size());
+        Assertions.assertEquals("e", doublyLinkedList.pollLast());
+        Assertions.assertEquals("c", doublyLinkedList.pollLast());
+        Assertions.assertEquals("a", doublyLinkedList.pollLast());
+    }
+
+    @Test
     public void removeElementsFromRear() {
         QuaideDoublyLinkedList<Integer> doublyLinkedList = new QuaideDoublyLinkedList<>();
 
@@ -64,5 +84,21 @@ public class QuaideDoublyLinkedListTest {
         Assertions.assertEquals(1, doublyLinkedList.pollLast());
 
         Assertions.assertThrows(NoSuchElementException.class, doublyLinkedList::pollLast);
+    }
+
+    @Test
+    public void removeElementsFromFront() {
+        QuaideDoublyLinkedList<Integer> doublyLinkedList = new QuaideDoublyLinkedList<>();
+
+        doublyLinkedList.append(1);
+        doublyLinkedList.append(2);
+        doublyLinkedList.append(3);
+
+        Assertions.assertEquals(1, doublyLinkedList.pollFirst());
+        Assertions.assertEquals(2, doublyLinkedList.pollFirst());
+        Assertions.assertEquals(1, doublyLinkedList.size());
+        Assertions.assertEquals(3, doublyLinkedList.pollFirst());
+
+        Assertions.assertThrows(NoSuchElementException.class, doublyLinkedList::pollFirst);
     }
 }
