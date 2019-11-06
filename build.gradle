@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'info.solidsoft.pitest' version '1.4.5'
+    id 'jacoco'
 }
 
 group 'coding'
@@ -27,3 +29,50 @@ test {
         events "passed", "skipped", "failed"
     }
 }
+
+jacoco {
+    toolVersion = '0.8.4'
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.enabled true
+    }
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it,
+                    exclude: [])
+        })
+    }
+}
+test.finalizedBy jacocoTestReport
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                counter = 'INSTRUCTION'
+                value = 'COVEREDRATIO'
+                minimum = 1.0
+            }
+        }
+    }
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it)
+
+        })
+    }
+}
+
+check.dependsOn jacocoTestCoverageVerification
+
+pitest {
+    targetClasses = ['linkedlist']
+    threads = 4
+    outputFormats = ['HTML']
+}
+
+check.dependsOn 'pitest'
