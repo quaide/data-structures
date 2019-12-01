@@ -6,4 +6,4 @@ Purpose is to better understand existing data structures while honing java progr
 ## Current Implementations:
 - Double-ended queue
 - Resizable array list
-- Hash Set
+- Hash set
