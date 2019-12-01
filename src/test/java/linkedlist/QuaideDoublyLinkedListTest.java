@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 public class QuaideDoublyLinkedListTest {
 
     @Test
-    public void addSingleElement() {
+    void addSingleElement() {
         //arrange
         QuaideDoublyLinkedList<String> doublyLinkedList = new QuaideDoublyLinkedList<>();
 
@@ -21,7 +21,7 @@ public class QuaideDoublyLinkedListTest {
     }
 
     @Test
-    public void addElementToFront() {
+    void addElementToFront() {
         QuaideDoublyLinkedList<String> doublyLinkedList = new QuaideDoublyLinkedList<>();
 
         doublyLinkedList.prepend("Quaide");
@@ -37,7 +37,7 @@ public class QuaideDoublyLinkedListTest {
     }
 
     @Test
-    public void appendingManyElements() {
+    void appendingManyElements() {
         QuaideDoublyLinkedList<Integer> doublyLinkedList = new QuaideDoublyLinkedList<>();
 
         for (int i = 0; i < 10; i++) {
@@ -49,7 +49,7 @@ public class QuaideDoublyLinkedListTest {
     }
 
     @Test
-    public void removeElement() {
+    void removeElement() {
         QuaideDoublyLinkedList<String> doublyLinkedList = new QuaideDoublyLinkedList<>();
         Assertions.assertEquals(false, doublyLinkedList.remove("a"));
 
@@ -71,7 +71,7 @@ public class QuaideDoublyLinkedListTest {
     }
 
     @Test
-    public void removeElementsFromRear() {
+    void removeElementsFromRear() {
         QuaideDoublyLinkedList<Integer> doublyLinkedList = new QuaideDoublyLinkedList<>();
 
         doublyLinkedList.append(1);
@@ -87,7 +87,7 @@ public class QuaideDoublyLinkedListTest {
     }
 
     @Test
-    public void removeElementsFromFront() {
+    void removeElementsFromFront() {
         QuaideDoublyLinkedList<Integer> doublyLinkedList = new QuaideDoublyLinkedList<>();
 
         doublyLinkedList.append(1);

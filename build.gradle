@@ -1,6 +1,6 @@
 plugins {
     id 'java'
-    id 'info.solidsoft.pitest' version '1.4.5'
+    //id 'info.solidsoft.pitest' version '1.4.5'
     id 'jacoco'
 }
 
@@ -40,12 +40,6 @@ jacocoTestReport {
         csv.enabled false
         html.enabled true
     }
-    afterEvaluate {
-        classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it,
-                    exclude: [])
-        })
-    }
 }
 test.finalizedBy jacocoTestReport
 
@@ -55,24 +49,18 @@ jacocoTestCoverageVerification {
             limit {
                 counter = 'INSTRUCTION'
                 value = 'COVEREDRATIO'
-                minimum = 1.0
+                minimum = 0.0
             }
         }
-    }
-    afterEvaluate {
-        classDirectories = files(classDirectories.files.collect {
-            fileTree(dir: it)
-
-        })
     }
 }
 
 check.dependsOn jacocoTestCoverageVerification
 
-pitest {
-    targetClasses = ['linkedlist']
-    threads = 4
-    outputFormats = ['HTML']
-}
-
-check.dependsOn 'pitest'
+//pitest {
+//    targetClasses = ['linkedlist']
+//    threads = 4
+//    outputFormats = ['HTML']
+//}
+//
+//check.dependsOn 'pitest'
