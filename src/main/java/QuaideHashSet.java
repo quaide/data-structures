@@ -26,6 +26,7 @@ public class QuaideHashSet<T> {
 
     public QuaideHashSet() {
         quaideArray = new Object[10];
+        this.loadFactor = 0;
         this.size = 0;
     }
 
@@ -51,6 +52,8 @@ public class QuaideHashSet<T> {
                 headNode.next.setValue(element);
                 headNode.next.setNext(null);
             }
+            updateLoadFactor();
+            updateArray();
             size = size + 1;
             return true;
         } else {
@@ -63,6 +66,7 @@ public class QuaideHashSet<T> {
         if (contains(element)) {
             quaideArray[getHashedIndex(element)] = null;
             size = size - 1;
+            updateLoadFactor();
             return true;
         } else {
             return false;
@@ -93,9 +97,16 @@ public class QuaideHashSet<T> {
         return this.size;
     }
 
-    //scale load factor
-    public void updateLoadFactor() {
+    private void updateLoadFactor() {
         loadFactor = size / quaideArray.length;
     }
 
+    public void updateArray() {
+        if (this.loadFactor > 0.7) {
+            Object[] newArray = new Object[quaideArray.length * 2];
+            System.arraycopy(quaideArray, 0, newArray, 0, size);
+            quaideArray = new Object[newArray.length];
+            System.arraycopy(newArray, 0, quaideArray, 0, size);
+        }
+    }
 }
