@@ -37,11 +37,7 @@ public class QuaideList {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("This index does not exist!");
         } else {
-            String[] newArray = new String[quaideArray.length];
-            System.arraycopy(quaideArray, 0, newArray, 0, index);
-            System.arraycopy(quaideArray, index + 1, newArray, index, quaideArray.length - (index + 1));
-            System.arraycopy(newArray, 0, quaideArray, 0, size);
-            size--;
+
         }
     }
 

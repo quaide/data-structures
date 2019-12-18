@@ -19,7 +19,9 @@ class QuaideHashSetTest {
 
         quaideHashSet.add("Quaide");
 
+        Assertions.assertTrue(quaideHashSet.contains("Quaide"));
         Assertions.assertTrue(quaideHashSet.remove("Quaide"));
+        Assertions.assertFalse(quaideHashSet.contains("Quaide"));
         Assertions.assertEquals(0, quaideHashSet.size());
     }
 
@@ -28,22 +30,26 @@ class QuaideHashSetTest {
         QuaideHashSet<String> quaideHashSet = new QuaideHashSet<>();
 
         for (int i = 0; i < 20; i++) {
-            Assertions.assertTrue(quaideHashSet.add(String.valueOf(i)));
-            Assertions.assertEquals(i + 1, quaideHashSet.size());
+            quaideHashSet.add(String.valueOf(i));
         }
 
-        for (int i = 0; i < 20; i++) {
+        for (int i = 19; i >= 0; i--) {
+            boolean contains = quaideHashSet.contains(String.valueOf(i));
+            Assertions.assertTrue(quaideHashSet.contains(String.valueOf(i)));
             Assertions.assertTrue(quaideHashSet.remove(String.valueOf(i)));
-            Assertions.assertEquals(i + 1, quaideHashSet.size());
+            Assertions.assertFalse(quaideHashSet.contains(String.valueOf(i)));
+            Assertions.assertEquals(i, quaideHashSet.size());
         }
     }
 
     @Test
-    void handlesCollisions() {
+    void addManyElements() {
         QuaideHashSet<String> quaideHashSet = new QuaideHashSet<>();
 
         for (int i = 0; i < 20; i++) {
+            Assertions.assertFalse(quaideHashSet.contains(String.valueOf(i)));
             Assertions.assertTrue(quaideHashSet.add(String.valueOf(i)));
+            Assertions.assertTrue(quaideHashSet.contains(String.valueOf(i)));
             Assertions.assertEquals(i + 1, quaideHashSet.size());
         }
     }

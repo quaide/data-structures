@@ -1,7 +1,7 @@
 public class QuaideHashSet<T> {
     private int size = 0;
     private Object[] quaideArray;
-    private double loadFactor;
+//    private double loadFactor;
 
     private static class Node<T> {
         private T value;
@@ -26,7 +26,7 @@ public class QuaideHashSet<T> {
 
     public QuaideHashSet() {
         quaideArray = new Object[10];
-        this.loadFactor = 0;
+//        this.loadFactor = 0;
         this.size = 0;
     }
 
@@ -52,8 +52,8 @@ public class QuaideHashSet<T> {
                 headNode.next.setValue(element);
                 headNode.next.setNext(null);
             }
-            updateLoadFactor();
-            updateArray();
+//            updateLoadFactor();
+//            updateArray();
             size = size + 1;
             return true;
         } else {
@@ -61,16 +61,32 @@ public class QuaideHashSet<T> {
         }
     }
 
-    //fix this, doesn't account for linked list
     public boolean remove(T element) {
-        if (contains(element)) {
-            quaideArray[getHashedIndex(element)] = null;
-            size = size - 1;
-            updateLoadFactor();
-            return true;
-        } else {
+        int hashedIndex = getHashedIndex(element);
+        Node<T> headNode = (Node<T>) quaideArray[hashedIndex];
+        if(headNode == null) {
             return false;
         }
+        else if (headNode.value.equals(element)) {
+            quaideArray[hashedIndex] = headNode.next;
+            size--;
+            return true;
+        }
+        else {
+            Node<T> currentNode = headNode.next;
+            Node<T> previousNode = headNode;
+            while (currentNode != null) {
+                if (currentNode.value.equals(element)) {
+                    previousNode.next = currentNode.next;
+                    size--;
+                    return true;
+                } else {
+                    previousNode = currentNode;
+                    currentNode = currentNode.next;
+                }
+            }
+        }
+        return false;
     }
 
     public boolean contains(T element) {
@@ -80,7 +96,7 @@ public class QuaideHashSet<T> {
             return false;
         }
         else {
-            do {
+            while(headNode != null) {
                 if(headNode.value.equals(element)) {
                     return true;
                 }
@@ -88,7 +104,6 @@ public class QuaideHashSet<T> {
                     headNode = headNode.next;
                 }
             }
-            while(headNode != null);
         }
         return false;
     }
@@ -97,16 +112,15 @@ public class QuaideHashSet<T> {
         return this.size;
     }
 
-    private void updateLoadFactor() {
-        loadFactor = size / quaideArray.length;
-    }
-
-    public void updateArray() {
-        if (this.loadFactor > 0.7) {
-            Object[] newArray = new Object[quaideArray.length * 2];
-            System.arraycopy(quaideArray, 0, newArray, 0, size);
-            quaideArray = new Object[newArray.length];
-            System.arraycopy(newArray, 0, quaideArray, 0, size);
-        }
-    }
+//    private void updateLoadFactor() {
+//        loadFactor = size / quaideArray.length;
+//    }
+//
+//    public void updateArray() {
+//        if (this.loadFactor > 0.7) {
+//            Object[] newArray = new Object[quaideArray.length * 2];
+//            System.arraycopy(quaideArray, 0, newArray, 0, size);
+//            quaideArray = newArray;
+//        }
+//    }
 }
